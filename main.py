@@ -1,24 +1,3 @@
-
+weones=["manzana","mati","mati otra vez"]
 for mancos in weones:
-  print "a todos le gusta el pico"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  print "al "+mancos+" le gusta el pico"
