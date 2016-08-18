@@ -69,4 +69,6 @@ def rating_peli(user,peli):
 	return suma_rat/suma_rat_div
 
 users_pelis,movies_id=creacion_diccionarios(archratings,archmovies)
-print rating_peli('1','1')
+x=True
+while x==True:
+	rating_peli(raw_input('ingrese usuario:'),raw_input('ingrese pelicula:'))
