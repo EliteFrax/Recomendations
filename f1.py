@@ -1,75 +1,79 @@
 
 
+archratings = 'ratings.dat'
+archmovies = 'movies.dat'
 
-archratings='ratings.dat'
-archmovies='movies.dat'
 
-
-def creacion_diccionarios(ratings,movies):
-	users_pelis=dict()
-	ratings_file=open(ratings)
+def Creacion_Diccionarios(ratings, movies):
+	#crea los diccionarios usados en el programa
+	diccionario_usuarios_info_peliculas = dict()
+	ratings_file = open(ratings)
 	for line in ratings_file:
-		user,movie,rating,time=line.strip().split('::')
-		if user in users_pelis:
-			users_pelis[user].append((movie,rating,time))
+		user,movie,rating,time = line.strip().split('::')
+		if user in diccionario_usuarios_info_peliculas:
+			diccionario_usuarios_info_peliculas[user].append((movie,rating,time))
 		else:
-			users_pelis[user]=[[movie,rating,time]]
+			diccionario_usuarios_info_peliculas[user] = [[movie,rating,time]]
 	ratings_file.close()
-	movies_id=dict()
-	movies_file=open(movies)
+	diccionario_datos_peliculas = dict()
+	movies_file = open(movies)
 	for line in movies_file:
-		movie,title,genres=line.strip().split('::')
-		movies_id[movie]=(title,genres)
+		movie,title,genres = line.strip().split('::')
+		diccionario_datos_peliculas[movie] = (title,genres)
 	movies_file.close()
-	return users_pelis,movies_id		
+	global diccionario_usuarios_info_peliculas,diccionario_datos_peliculas
+	return diccionario_usuarios_info_peliculas,diccionario_datos_peliculas		
 		
-def sumante1(a_sumar,dictsum):
-	suma=0
+def Sumante1(a_sumar, dictsum):
+	#suma los ratings de los usuarios individualmente
+	suma = 0
 	for z in a_sumar:
-		suma+=float(dictsum[z])**2
+		suma += float(dictsum[z])**2
 	return suma
 	
-def sumante2(a_sumar,dictsum1,dictsum2):
-	suma=0
+def Sumante2(a_sumar, dictsum1, dictsum2):
+	#suma las multiplicaciones de ratings de ambos usuarios
+	suma = 0
 	for z in a_sumar:
-		suma+=float(dictsum1[z])*float(dictsum2[z])
+		suma += float(dictsum1[z])*float(dictsum2[z])
 	return suma
 		
-def similitud_entre_usuarios(user1,user2):
+def Similitud_Entre_Usuarios(user1, user2):
+	#calcula y retorna la similitud entre usuarios
 	creacion_diccionarios(archratings,archmovies)
-	dictrat1={}
-	dictrat2={}
-	vistas_user1=set()
-	vistas_user2=set()
-	for vistas in users_pelis[user1] :
-		vistas_user1.add(vistas[0])
-		dictrat1[vistas[0]]=vistas[1]
-	for vistas in users_pelis[user2] :
-		vistas_user2.add(vistas[0])
-		dictrat2[vistas[0]]=vistas[1]
-	conjunto_interseccion=list(vistas_user1&vistas_user2)
-	vistas_user1=list(vistas_user1)
-	vistas_user2=list(vistas_user2)
-	sumatoria_ambos=sumante2(conjunto_interseccion,dictrat1,dictrat2)
-	sumatoria_1=sumante1(vistas_user1,dictrat1)
-	sumatoria_2=sumante1(vistas_user2,dictrat2)
-	sim=sumatoria_ambos/((sumatoria_1**(0.5))*(sumatoria_2**(0.5)))
+	diccionario_ratings_user1 = {}
+	diccionario_ratings_user2 = {}
+	peliculas_vistas_user_1 = set()
+	peliculas_vistas_user_2 = set()
+	for vistas in diccionario_usuarios_info_peliculas[user1] :
+		peliculas_vistas_user_1.add(vistas[0])
+		diccionario_ratings_user1[vistas[0]] = vistas[1]
+	for vistas in diccionario_usuarios_info_peliculas[user2] :
+		peliculas_vistas_user_2.add(vistas[0])
+		diccionario_ratings_user2[vistas[0]] = vistas[1]
+	conjunto_interseccion = list(peliculas_vistas_user_1&peliculas_vistas_user_2)
+	peliculas_vistas_user_1 = list(peliculas_vistas_user_1)
+	peliculas_vistas_user_2 = list(peliculas_vistas_user_2)
+	sumatoria_ambos = sumante2(conjunto_interseccion,diccionario_ratings_user1,diccionario_ratings_user2)
+	sumatoria_1 = sumante1(peliculas_vistas_user_1,diccionario_ratings_user1)
+	sumatoria_2 = sumante1(peliculas_vistas_user_2,diccionario_ratings_user2)
+	sim = sumatoria_ambos / ((sumatoria_1 ** (0.5)) * (sumatoria_2 ** (0.5)))
 	return sim
 	
-def rating_peli(user,peli):
-	suma_rat=0
-	suma_rat_div=0
-	for spectator in users_pelis:
-		for alguna_wea in users_pelis[spectator]:
-			if alguna_wea[0]==peli:
-				sim=similitud_entre_usuarios(user,spectator)
-				for mov,rat,time in users_pelis[spectator]:
-					if mov == peli:
-						rat_spec=float(rat)
-						suma_rat+=sim*rat_spec
-						suma_rat_div+=float(sim)
-	return suma_rat/suma_rat_div
+def Rating_Pelicula(usuario, pelicula):
+	#caulcula y retorna el rating de una pelicula para el usuario actual en base a su similitud con otros usuarios
+	suma_rat = 0
+	suma_rat_div = 0
+	for Espectador in diccionario_usuarios_info_peliculas:
+		for alguna_wea in diccionario_usuarios_info_peliculas[Espectador]:
+			if alguna_wea[0] == pelicula:
+				sim = similitud_entre_usuarios(usuario,Espectador)
+				for mov,rat,time in diccionario_usuarios_info_peliculas[Espectador]:
+					if mov  ==  pelicula:
+						rat_spec = float(rat)
+						suma_rat += sim * rat_spec
+						suma_rat_div += float(sim)
+	return suma_rat / suma_rat_div
 
-users_pelis,movies_id=creacion_diccionarios(archratings,archmovies)
 
-print rating_peli(raw_input('usuario:'),raw_input('pelicula:'))
+print Rating_Pelicula('4','5')
