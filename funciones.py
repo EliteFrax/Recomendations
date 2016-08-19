@@ -1,4 +1,4 @@
-
+#archivo que contiene las funciones para el programa
 
 archratings = 'ratings.dat'
 archmovies = 'movies.dat'
