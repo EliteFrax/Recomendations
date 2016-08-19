@@ -1,5 +1,6 @@
 
 
+
 archratings='ratings.dat'
 archmovies='movies.dat'
 
@@ -35,6 +36,7 @@ def sumante2(a_sumar,dictsum1,dictsum2):
 	return suma
 		
 def similitud_entre_usuarios(user1,user2):
+	creacion_diccionarios(archratings,archmovies)
 	dictrat1={}
 	dictrat2={}
 	vistas_user1=set()
@@ -45,10 +47,10 @@ def similitud_entre_usuarios(user1,user2):
 	for vistas in users_pelis[user2] :
 		vistas_user2.add(vistas[0])
 		dictrat2[vistas[0]]=vistas[1]
-	conjunto_unido=list(vistas_user1&vistas_user2)
+	conjunto_interseccion=list(vistas_user1&vistas_user2)
 	vistas_user1=list(vistas_user1)
 	vistas_user2=list(vistas_user2)
-	sumatoria_ambos=sumante2(conjunto_unido,dictrat1,dictrat2)
+	sumatoria_ambos=sumante2(conjunto_interseccion,dictrat1,dictrat2)
 	sumatoria_1=sumante1(vistas_user1,dictrat1)
 	sumatoria_2=sumante1(vistas_user2,dictrat2)
 	sim=sumatoria_ambos/((sumatoria_1**(0.5))*(sumatoria_2**(0.5)))
@@ -69,6 +71,5 @@ def rating_peli(user,peli):
 	return suma_rat/suma_rat_div
 
 users_pelis,movies_id=creacion_diccionarios(archratings,archmovies)
-x=True
-while x==True:
-	rating_peli(raw_input('ingrese usuario:'),raw_input('ingrese pelicula:'))
+
+print rating_peli(raw_input('usuario:'),raw_input('pelicula:'))
