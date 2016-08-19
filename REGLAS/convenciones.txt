@@ -1,0 +1,16 @@
+FUNCIONES
+	def nombreDeFuncion(arg, arg2, arg3, argn):
+		# descripcion y tipo de retorno
+		...
+
+VARIABLES
+	// de ser posible usar paréntesis para separar las operaciones
+	nombre_de_variable = valor_nuevo + (valor_exponente ** 2) - valor_restado
+
+IMPORTES
+	hacer los importes al comienzo del main, y dentro de cada sub-módulo
+
+AÑADIR LOS CAMBIOS REALIZADOS AL ARCHIVO cambios.txt, con el formato:
+	USUARIO: FECHA::ARCHIVO -> DESCRIPCION DEL CAMBIO
+
+
