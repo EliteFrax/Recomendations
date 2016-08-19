@@ -1,5 +1,5 @@
 # RecomendationsApp
-Proyecto 2 IWG-101 USM \n
+Proyecto 2 IWG-101 USM
 Programa para ver recomendaciones de peliculas basado en las bases de datos de movielens
 
 #A tener en cuenta
