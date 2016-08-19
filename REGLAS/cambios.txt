@@ -1,0 +1,5 @@
+CAMBIOS AL PROGRAMA
+
+FECHA: VIERNES 19 DE AGOSTO
+
+JORGE: añadido archivo cambios.txt y convenciones.txt en carpeta /REGLAS/
