@@ -21,7 +21,6 @@ def Creacion_Diccionarios(ratings, movies):
 		movie,title,genres = line.strip().split('::')
 		diccionario_datos_peliculas[movie] = (title,genres)
 	movies_file.close()
-	global diccionario_usuarios_info_peliculas,diccionario_datos_peliculas
 	return diccionario_usuarios_info_peliculas,diccionario_datos_peliculas		
 		
 def Sumante1(a_sumar, dictsum):
