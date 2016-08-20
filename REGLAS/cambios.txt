@@ -3,4 +3,6 @@ CAMBIOS AL PROGRAMA
 FECHA: VIERNES 19 DE AGOSTO
 
 JORGE: añadido archivo cambios.txt y convenciones.txt en carpeta /REGLAS/
-FRANCISCO: añadido archivo main.py y modificado funciones.py para que los diccionarios puedan ser definidos desde main.py
+
+FRANCISCO: 20/08/16-00:15:: main.py -> añadido y definicion de variables(diccionarios)
+                            funciones.py -> modificado de manera que se pueda dar las variables desde main.py ademas pequeños cambios referidos al cambio de idioma (user -> usuarios)
