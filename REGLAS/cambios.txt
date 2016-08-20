@@ -6,3 +6,5 @@ JORGE: añadido archivo cambios.txt y convenciones.txt en carpeta /REGLAS/
 
 FRANCISCO: 20/08/16-00:15:: main.py -> añadido y definicion de variables(diccionarios)
                             funciones.py -> modificado de manera que se pueda dar las variables desde main.py ademas pequeños cambios referidos al cambio de idioma (user -> usuarios)
+
+JORGE: 20/08/16-00:49:: Tkinter Progress/.. -> Añadida carpeta de pruebas Tkinter Progress, aqui se probará de forma temporal                                              el funcionamiento del programa gráfico, de momento no posee conexión alguna                                                con el programa principal, pero se espera que se combinen pronto.
