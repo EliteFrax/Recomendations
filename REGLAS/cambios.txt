@@ -8,4 +8,7 @@ FRANCISCO: 20/08/16-00:15:: main.py -> añadido y definicion de variables(diccio
                             funciones.py -> modificado de manera que se pueda dar las variables desde main.py ademas pequeños cambios referidos al cambio de idioma (user -> usuarios)
 
 JORGE: 20/08/16-00:49:: Tkinter Progress/.. -> Añadida carpeta de pruebas Tkinter Progress, aqui se probará de forma temporal                                              el funcionamiento del programa gráfico, de momento no posee conexión alguna                                                con el programa principal, pero se espera que se combinen pronto.
+
 FRANCISCO: 20/08/16-21:06:: funciones.py -> agrege la funcino top ten, no apta para presentacion ya que es muy lenta(en pruebas despues                                            de 1 hora de proceso no terminaba), tambien dentro de la funcion se imprimi por pantalla cada                                           vez que sace un rating de pelicula
+
+FRANCISCO: 21/08/16-12:26:: funciones.py -> completa la funcion top_ten que logra completarse en 7 mins aprox(falta decidir que hacer en                                           caso de que los ratings no puedan ser dados)
