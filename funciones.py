@@ -76,3 +76,18 @@ def Peliculas_Sin_Rating(usuario, diccionario_usuarios_info_peliculas, diccionar
 		if datos_ratings_usuario[0] in buscar_rating:
 			buscar_rating.discard(datos_ratings_usuario[0])
 	return list(buscar_rating)
+	
+def Top_Ten(usuario, diccionario_usuarios_info_peliculas, diccionario_datos_peliculas):
+	#la funcion que debe retornar las 10 mejores peliculas
+	candidatos = Peliculas_Sin_Rating(usuario, diccionario_usuarios_info_peliculas, diccionario_datos_peliculas)
+	top_ten_previo = []
+	top_ten = []
+	for pelicula in candidatos:
+		print pelicula
+		rating = Rating_Pelicula(usuario, pelicula, diccionario_usuarios_info_peliculas, diccionario_datos_peliculas)
+		top_ten_previo.append((rating, pelicula))
+	top_ten.sort()
+	for x in range(10):
+		top_ten.append(top_ten_previo[x])
+	return top_ten	
+		
