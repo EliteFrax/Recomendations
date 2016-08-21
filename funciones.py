@@ -96,11 +96,13 @@ def Top_Ten(usuario, diccionario_usuarios_info_peliculas, diccionario_datos_peli
 	return top_ten
 	
 def Usuarios_Similares(usuario, diccionario_usuarios_info_peliculas, diccionario_datos_peliculas):
+	#La funcion aqui detallada devuelve un diccionario con los usurios mas similares con los que se obendra un rating
 	similares = dict(diccionario_usuarios_info_peliculas)
 	a_eliminar = set()
 	for usuario_comparado in similares:
 		simil = Similitud_Entre_Usuarios(usuario, usuario_comparado, diccionario_usuarios_info_peliculas, diccionario_datos_peliculas)
-		if simil >= float(0.5):
+		if simil >= float(0.5): #aqui se puede cambiar el nivel de similitud
+	
 			continue
 		else:
 			a_eliminar.add(usuario_comparado)
