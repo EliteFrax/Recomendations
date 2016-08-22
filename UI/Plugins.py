@@ -40,11 +40,11 @@ def ProgramResizeSmooth(master, last_size, new_size):
 def ProgramDragWithMouse(master, event):
     master.update()
     actual_pos = master.winfo_geometry().replace("+","x").strip().split("x")
-    actual_size = map(int, actual_pos)[0:2]
     actual_pos = map(int, actual_pos)[2:4]
     
     rel_x = master.winfo_pointerx() - actual_pos[0]
     rel_y = master.winfo_pointery() - actual_pos[1]
+    new_x, new_y = actual_pos
     
     xx = event.x
     yy = event.y
@@ -58,10 +58,10 @@ def ProgramDragWithMouse(master, event):
         master.update()
         pos = (master.winfo_pointerx(), master.winfo_pointery())
         
-        new_x = pos[0]-rel_x
-        new_y = pos[1]-rel_y
+        new_x += ((pos[0]-rel_x) - new_x) / 10.0
+        new_y += ((pos[1]-rel_y) - new_y) / 10.0
     
-        master.geometry("+{0}+{1}".format(new_x, new_y))
+        master.geometry("+{0}+{1}".format(int(new_x), int(new_y)))
         
         master.bind("<ButtonRelease-1>", end_all)
     master.unbind("<ButtonRelease-1>")

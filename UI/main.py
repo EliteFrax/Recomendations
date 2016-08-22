@@ -8,7 +8,7 @@ import Plugins
 
 # create master and main widget
 master = Tk()
-program_name = "Program Name"
+program_name = "La Paella"
 master.wm_title(program_name)
 master.overrideredirect(1)
 
@@ -21,6 +21,7 @@ updated = False
 new_created = True
 last_geometry = Plugins.ProgramGetSize(master)
 new_geometry = last_geometry
+global_username = "__USERNAME__"
 
 #colors
 program_bg = "#2980b9"
@@ -28,22 +29,33 @@ program_border = "#1c567d"
 program_border_dark = "#123a54"
 
 #widgets
-program_bg_clear_fg = "#2980b9"
-program_bg_dark_fg = "#3498db"
+program_bg_clear_fg = "#2e90d1"
+program_bg_dark_fg = "#52a7e0"
 
 program_fg_clear_bg = "#2c3e50"
 program_fg_dark_bg = "#34495e"
+
+program_clear = "#ffffff"
 
 #set program window background color
 master["bg"]=program_bg
 main_border=Frame(master, bg=program_border)
 top_bar = Frame(main_border, bg=program_border)
+top_bar_name = Label(top_bar, text=program_name, bg=program_border, fg=program_clear)
+top_bar_icon_image = PhotoImage(file="data/icon/icon_16x16.gif")
+program_icon_image = PhotoImage(file="data/icon/icon_196x196.gif")
+top_bar_icon = Label(top_bar, text="", image=top_bar_icon_image, bg=program_border)
+top_bar_icon.pack(side=LEFT)
 #move window with top_bar if clicked
 top_bar.bind("<Button-1>", lambda x: Plugins.ProgramDragWithMouse(master, x))
-
+top_bar_name.bind("<Button-1>", lambda x: Plugins.ProgramDragWithMouse(master, x))
+top_bar_name.pack(side=LEFT, fill=X, expand=YES)
 #functions
 def ProgramEnd(frame = None):
     os._exit(1)
+    
+def ReloadIndexesInListbox(new_value, target_list):
+    pass
 
 close_button = Button(top_bar, text="x", command=lambda: ProgramEnd(),
                       bg=program_border_dark, fg="white", bd=0,
@@ -79,6 +91,9 @@ def main(status = "Login"):
         11: "Esteban Soto",
         12: "Marisol Tapia",
     }
+    for i in range(1000):
+        user_list[i+12] = "User"+str(i)
+    
     user_list_length = len(user_list.keys())
 
     # no matter the program_status, there is a menu, if a program_status 
@@ -104,6 +119,25 @@ def main(status = "Login"):
         label2 = Label(main_frame, text="Elija su usuario de la lista:",
                        font=("Sans", 12), bg=program_bg)
         
+        label3 = Label(main_frame, text="Elija fuente de",
+                       font=("Sans", 12), bg=program_bg)
+        label4 = Label(main_frame, text="usuarios y peliculas:",
+                       font=("Sans", 12), bg=program_bg)
+                    
+        program_icon = Label(main_frame, text="", image=program_icon_image,
+                             bg=program_bg, borderwidth=0)
+                       
+        option_val = StringVar()
+        option_list = ["MovieLens 10M Dataset", "Small Dataset"]
+        option = OptionMenu(main_frame, option_val, *option_list,
+                            command=None)
+        option["menu"].config(bg=program_bg, fg=program_clear,
+                              activebackground=program_bg)
+        option.config(bg=program_bg, fg=program_clear, relief=FLAT,
+                      highlightthickness=0, )                      
+        
+        option_val.set(option_list[0])
+        
         listbox0 = Listbox(main_frame, relief=FLAT, selectmode=SINGLE, bd=0,
                            highlightthickness=0)
         
@@ -121,15 +155,27 @@ def main(status = "Login"):
         button1 = Button(bf_right, text="Exit", relief=FLAT,
                          command=lambda: ProgramEnd(main_frame),
                          bg=program_bg, highlightthickness=0)
+                         
+        button2_value = option_list[0]
+        button2 = Button(main_frame, text="Aplicar cambios...", relief=FLAT,
+                         command=lambda: ReloadIndexesInListbox(button2_value, listbox0), 
+                         bg=program_bg, highlightthickness=0)
         
         label0.grid(row=0, padx=8)
         label1.grid(row=1, padx=8, pady=(0, 8))
-        label2.grid(row=2, padx=8, sticky=W)
-            
-        listbox0.grid(row=3, padx=(8,26), pady=(12,4), sticky=W+E)
-        scale0.grid(row=3, padx=(0, 8), pady=(12, 4), sticky=E+N+S)
+        label2.grid(row=5, padx=8, sticky=W)
         
-        bf.grid(row=4, sticky=W+E)
+        program_icon.grid(row=2)
+        
+        label3.grid(row=3, padx=8, sticky=W)
+        option.grid(row=5, sticky=W+E, padx=8)
+        label4.grid(row=4, padx=8, sticky=W)
+        button2.grid(row=6, padx=8, sticky=W+E)
+        
+        listbox0.grid(row=7, padx=(8,26), pady=(12,4), sticky=W+E)
+        scale0.grid(row=7, padx=(0, 8), pady=(12, 4), sticky=E+N+S)
+        
+        bf.grid(row=8, sticky=W+E)
         bf_left.pack(fill=BOTH, expand=YES, side=LEFT, padx=(8, 0), pady=4)
         bf_right.pack(fill=BOTH, expand=YES, side=RIGHT, padx=(0, 8), pady=4)
 
@@ -165,6 +211,8 @@ def main(status = "Login"):
         animation0.grid(row=1, pady=8)
 
     elif program_status == "TopTen":
+        labeluser = Label(main_frame, text="Bienvenido: "+str(global_username),
+                          font=("Serif", 22), bg=program_bg)
         label0 = Label(main_frame, text="Estas son las 10 peliculas\nrecomendadas para usted!",
                        font=("Serif", 16), bg=program_bg)
         data_frame = Frame(main_frame, bg=program_bg)
@@ -178,20 +226,24 @@ def main(status = "Login"):
         label2 = Label(data_frame, text="", font=("Serif", 12), bg=program_bg)
         label3 = Label(data_frame, text="", font=("Serif", 12), bg=program_bg)
         
+        label4 = Label(main_frame, text="+1;", font=("Arial Black", 24), bg="#181818", fg="white")
+        
         button0 = Button(main_frame, text="Volver Atras!",
                          command=lambda: ProgramSwitchMode("Login"),
                          highlightthickness=0)
         
-        label0.grid(row=0, columnspan=2)
+        labeluser.grid(row=0, columnspan=2, padx=8)
+        label0.grid(row=1, columnspan=2)
         label1.pack(fill=BOTH, padx=8)
         label2.pack(fill=X, padx=8)
         label3.pack(fill=X, padx=8)
         
-        data_frame.grid(row=1, column=1, sticky=N+S+W+E)
+        data_frame.grid(row=2, column=1, sticky=N+S+W+E)
         
-        count.grid(row=1, padx=8)
-        scale0.grid(row=2, sticky=W+E, padx=8)
-        button0.grid(row=2, column=1, padx=8, pady=4, sticky=W+E)
+        count.grid(row=2, padx=8)
+        label4.grid(row=2, sticky=E,padx=12) #topkek
+        scale0.grid(row=3, sticky=W+E, padx=8)
+        button0.grid(row=3, column=1, padx=8, pady=4, sticky=W+E)
 
     #allow for ProgramUpdateWidgets to modify widgets properties
     updated = True
@@ -213,6 +265,7 @@ def main(status = "Login"):
                 ProgramEnd(main_frame)
                 
             if program_status == "Login":
+                global global_username
                 #set scale0 <to> based on listbox0 length
                 user_list_length = len(user_list)
                 listbox0_max = max(user_list_length - int(listbox0["height"]), 0)
@@ -221,6 +274,8 @@ def main(status = "Login"):
                 #set listbox position based on scale
                 listbox0_y = int(round(scale0.get() ))
                 listbox0.yview(listbox0_y)
+                
+                global_username = listbox0.get(ACTIVE) 
                 
             elif program_status == "Loading":
                 animation0.config(image=animation0_list[(frame_time/400)%animation0_len])
@@ -238,7 +293,6 @@ def main(status = "Login"):
                 count.config(image=count_list[int(smooth_value%count_len)])
                 
                 label1.config(text=str("Movie Number "+str(10-scale0.get())+": ").center(20))
-                #label1.config(text="frames: "+str(count_len))
                 label2.config(text="sframe: "+str(round(smooth_value,2)))
                 label3.config(text="frame: "+str(value))
         except:
